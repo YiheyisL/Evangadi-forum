@@ -3,6 +3,8 @@ const express = require("express");
 
 const app = express();
 const port = 5100;
+const cors = require("cors");
+app.use(cors());
 //db connection
 const dbConnection = require("./db/dbConfig");
 //user routes middleware file
