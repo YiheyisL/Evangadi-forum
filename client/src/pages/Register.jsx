@@ -1,21 +1,17 @@
-import React, { useRef, useState, useContext } from "react";
+import React, { useRef } from "react";
 import classes from "./register.module.css";
 import axios from "../api/axiosConfig";
 import { Link, useNavigate } from "react-router-dom";
-import { AppState } from "../App";
+// import { AppState } from "../App";
 function Register() {
-  const { user, setuser } = useContext(AppState);
+  // const { user, setuser } = useContext(AppState);
   const navigate = useNavigate();
   const userNameDom = useRef();
   const firstNameDom = useRef();
   const lastNameDom = useRef();
   const emailDom = useRef();
   const passwordDom = useRef();
-  const [alert, setalert] = useState("");
-  const [error, seterror] = useState("");
-  const [createdMessage, setCreatedMessage] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
-  const [errorCatch, setCatch] = useState("");
+
   async function handleSubmit(e) {
     e.preventDefault();
     const usernameValue = userNameDom.current.value;
@@ -52,11 +48,6 @@ function Register() {
     <section className={classes.upper_wrapper}>
       <form onSubmit={handleSubmit}>
         <div>
-          {/* alerting messages for users */}
-          {alert && <div className="alerts">{alert}</div>}
-          {error && <div className="alerts">{error}</div>}
-          {createdMessage && <div className="alerts">{createdMessage}</div>}
-          {errorCatch && <div className="alerts">{errorCatch}</div>}
           <div>
             <span>username </span>
             <input ref={userNameDom} type="text" placeholder="username" />

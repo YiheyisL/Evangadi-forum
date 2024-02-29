@@ -1,9 +1,8 @@
-import React, { useContext, useEffect } from "react";
-import "./hwader.css";
+import { useContext, useEffect } from "react";
+import "./Header.css";
 import { Link, useNavigate } from "react-router-dom";
 import { AppState } from "../../App";
-import { Nav } from "react-bootstrap";
-
+import Nav from "react-bootstrap/Nav";
 import Container from "react-bootstrap/Container";
 
 import Navbar from "react-bootstrap/Navbar";
@@ -11,11 +10,11 @@ import Offcanvas from "react-bootstrap/Offcanvas";
 
 function Header() {
   const navigate = useNavigate();
-  const { user, setuser } = useContext(AppState);
+  const { user, setUser } = useContext(AppState);
 
   const logout = () => {
     // Clear the user object
-    setuser(null);
+    setUser(null);
 
     // Clear token from localStorage
     localStorage.setItem("token", "");
@@ -27,12 +26,12 @@ function Header() {
 
     if (storedToken) {
       // If a token is present, set the user as logged in
-      setuser({});
+      setUser({});
     } else {
       // If no token is present, set the user as logged out
-      setuser(null);
+      setUser(null);
     }
-  }, [setuser]);
+  }, [setUser]);
 
   return (
     <>
@@ -96,7 +95,6 @@ function Header() {
           </Container>
         </Navbar>
       ))}
-          
     </>
   );
 }

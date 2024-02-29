@@ -1,12 +1,10 @@
-import React from "react";
-import { TiIconName } from "react-icons/ti";
-
+// import React from "react";
 // import Logo from "../../assets/img/footerlogo.png";
 import { AiFillFacebook } from "react-icons/ai";
 import { TiSocialInstagram } from "react-icons/ti";
 import { AiFillYoutube } from "react-icons/ai";
 
-import "./footer.css";
+import "./Footer.css";
 function Footer() {
   return (
     <div className="footer-top mt-5">
@@ -16,7 +14,6 @@ function Footer() {
             <div className="col-lg-4 col-md-4">
               <div className="logo-footer">
                 <a className="navbar-brand" href="/">
-                  {" "}
                   <img
                     src="https://www.evangadi.com/themes/humans//assets/images/misc/evangadi-logo-home.png"
                     alt="evangadi logo"
@@ -26,29 +23,19 @@ function Footer() {
 
               <ul className="footer-social-list list-social list-inline">
                 <li>
-                  <a
-                    href="https://www.facebook.com/EthiopiansNetwork"
-                    target="_blank"
-                  >
-                    {" "}
+                  <a href="https://www.facebook.com/EthiopiansNetwork">
                     <AiFillFacebook />
                     <i className="social_facebook "></i>
                   </a>
                 </li>
                 <li>
-                  <a
-                    href="https://www.instagram.com/evangaditech/"
-                    target="_blank"
-                  >
+                  <a href="https://www.instagram.com/evangaditech/">
                     <TiSocialInstagram />
                     <i className="social_instagram "></i>
                   </a>
                 </li>
                 <li>
-                  <a
-                    href="https://www.youtube.com/c/weareethiopians"
-                    target="_blank"
-                  >
+                  <a href="https://www.youtube.com/c/weareethiopians">
                     <AiFillYoutube />
                     <i className="social_youtube "></i>
                   </a>

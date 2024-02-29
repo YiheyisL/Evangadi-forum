@@ -1,34 +1,42 @@
-import { useRef, useContext } from "react";
-import classes from "./register.module.css";
+import { useRef } from "react";
+import axios from "../../api/axiosConfig";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "../api/axiosConfig";
-import { AppState } from "../App";
+
+import classes from "../register.module.css";
+// import { AppState } from "../../App";
 function Login() {
-  const { user, setuser } = useContext(AppState);
+  // const { user, setUser } = useContext(AppState);
+
   const navigate = useNavigate();
-  const emailDom = useRef(null);
-  const passwordDom = useRef(null);
+  const emailDom = useRef();
+  const passwordDom = useRef();
+
+  // function to handle the user login
   async function handleSubmit(e) {
     e.preventDefault();
 
     const emailValue = emailDom.current.value;
     const passValue = passwordDom.current.value;
     if (!emailValue || !passValue) {
-      alert("please provide all required information");
+      alert("Please provide all requirs ");
+
       return;
     }
+
     try {
       const { data } = await axios.post("/users/login", {
         email: emailValue,
         password: passValue,
       });
-      alert("login successful");
+      alert("logged in successfuly");
+
       localStorage.setItem("token", data.token);
-      setuser(data);
+      console.log(data);
       navigate("/");
+      // setUser(data);
     } catch (error) {
       alert(error?.response?.data?.msg);
-      console.log(error.response);
+      console.log(error.response.data);
     }
   }
   return (
@@ -40,7 +48,7 @@ function Login() {
         </div>
         <br />
         <div>
-          <span>password </span>
+          <span>password</span>
           <input ref={passwordDom} type="text" placeholder="password" />
         </div>
         <button type="submit">Login</button>
