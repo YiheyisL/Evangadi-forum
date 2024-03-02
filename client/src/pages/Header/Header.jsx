@@ -39,7 +39,7 @@ function Header() {
         <Navbar
           key={expand}
           expand={expand}
-          className="bg-body-tertiary p-4 fixed-top shadow-sm mb-5"
+          className="bg-body-tertiary p-2 fixed-top shadow-sm mb-5"
         >
           <Container fluid>
             <Navbar.Brand>
@@ -67,7 +67,7 @@ function Header() {
                   <Nav.Link>
                     <div
                       onClick={() =>
-                        user ? navigate("/home") : navigate("/login")
+                        user ? navigate("/") : navigate("/login")
                       }
                     >
                       Home

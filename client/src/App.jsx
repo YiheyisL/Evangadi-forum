@@ -2,17 +2,20 @@ import { Route, Routes, useNavigate } from "react-router-dom";
 import "./App.css";
 import Header from "./pages/Header/Header";
 import Footer from "./pages/Footer/Footer";
-import Home from "./pages/Home";
+// import Home from "./pages/Home";
 import Login from "./pages/login/Login";
 import Register from "./pages/Register";
 import { useEffect, useState, createContext } from "react";
 import axios from "./api/axiosConfig";
-
+import About from "./pages/About/About";
+import Questions from "./pages/AllQuestion/AllQuestions";
+import SingleQuestion from "./pages/SingleQuestion/SingleQuestion";
+import AskQuestion from "./pages/AskQuestion/AskQuestion";
 export const AppState = createContext();
-// export const QuestionState = createContext();
+export const QuestionState = createContext();
 function App() {
   const [user, setUser] = useState({});
-  // // const [question, setquestion] = useState({});
+  //const [question, setquestion] = useState({});
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
   async function checkUser() {
@@ -36,10 +39,14 @@ function App() {
     <AppState.Provider value={{ user, setUser }}>
       <Header />
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<About />} />
         <Route path="/login" element={<Login />} />
+        {/* <Route path="/" element={<Home />} /> */}
+        {/* <Route path="/register" element={<Register />} /> */}
+        <Route path="/ask" element={<AskQuestion />} />
 
-        <Route path="/register" element={<Register />} />
+        <Route path="/home" element={<Questions />} />
+        <Route path="/question/:questionid" element={<SingleQuestion />} />
       </Routes>
       <Footer />
     </AppState.Provider>
