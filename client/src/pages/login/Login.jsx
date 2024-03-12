@@ -1,108 +1,95 @@
-import { useContext, useRef, useState } from "react";
-import axios from "../../api/axiosConfig";
+import React, { useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "../../api/axiosConfig";
 
-import "./login.css";
-import { AppState } from "../../App";
-function Login() {
-  const { user, setUser } = useContext(AppState);
-
+const LogIn = ({ setCurrentPage }) => {
   const navigate = useNavigate();
-  const emailDom = useRef();
-  const passwordDom = useRef();
-  const [alertMessages, setAlertMessages] = useState("");
-  const [success, setSuccess] = useState("");
-  // const [showPassword, setShowPassword] = useState(false);
 
-  // function to handle the user login
-  async function handleSubmit(e) {
+  // Reference for the username and password fields.
+  const emailDom = useRef(null);
+  const passwordDom = useRef(null);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const emailValue = emailDom.current.value;
-    const passValue = passwordDom.current.value;
+    // get values from the input fields
+    let emailValue = emailDom.current.value;
+    let passValue = passwordDom.current.value;
     if (!emailValue || !passValue) {
-      setAlertMessages("Please provide all requirs ");
-      setTimeout(() => {
-        setAlertMessages("");
-      }, 3000);
+      // console.log('Please provide all required information')
       return;
     }
-
     try {
       const { data } = await axios.post("/users/login", {
         email: emailValue,
         password: passValue,
       });
-      setSuccess("logged in successfuly");
-      setTimeout(() => {
-        setSuccess("");
-      }, 3000);
+      console.log("Login Successful!");
+      // console.log(data)
       localStorage.setItem("token", data.token);
-      // console.log(data);
-      setUser(data);
-      navigate("/home");
-      // setUser(data);
-    } catch (error) {
-      // alert(error?.response?.data?.msg);
-      console.log(error.response.data);
+      navigate("/");
+    } catch (err) {
+      console.log(err?.response?.data);
+      console.log("Something went wrong!");
     }
-  }
-  return (
-    <div className="container">
-      <div className="row">
-        <div className="col-md-6">
-          <div className="mainRegisterWrapper">
-            <section className="secondRegisterWrapper">
-              {alertMessages && <div className="alerts">{alertMessages}</div>}
-              {success && <div className="alerts">{success}</div>}
-              <form onSubmit={handleSubmit}>
-                <div className="inputs">
-                  <div>
-                    <input type="email" ref={emailDom} placeholder="email" />
-                  </div>
-                  <div className="password">
-                    <input
-                      type="password"
-                      ref={passwordDom}
-                      placeholder="password"
-                    />
-                    {/* <span>
-                      {showPassword ? (
-                        <FaRegEye className="eyes" />
-                      ) : (
-                        <FaRegEyeSlash className="eyes" />
-                      )}
-                    </span> */}
-                  </div>
-                </div>
-                <button className="toblue" type="submit">
-                  login
-                </button>
-              </form>
-            </section>
-          </div>
-        </div>
-      </div>
-    </div>
-    // <section className={classes.upper_wrapper}>
-    //   <h3 className="fw-bold">Login to your account</h3>
-    //   <p>
-    //     Don’t have an account? <Link to={"/register"}>Create Account</Link>
-    //   </p>
-    //   <form onSubmit={handleSubmit}>
-    //     <div>
-    //       {/* <span>email </span> */}
-    //       <input ref={emailDom} type="text" placeholder="email" />
-    //     </div>
-    //     <br />
-    //     <div>
-    //       {/* <span>password</span> */}
-    //       <input ref={passwordDom} type="text" placeholder="password" />
-    //     </div>
-    //     <button type="submit">Login</button>
-    //   </form>
-    // </section>
-  );
-}
+  };
 
-export default Login;
+  return (
+    <div className="col card p-5 text-center">
+      <div>
+        <h3 className="m-3">Login to your account</h3>
+        <p className="mb-5">
+          Don't have an account?{" "}
+          <a
+            href="#"
+            onClick={() => setCurrentPage("signup")}
+            className="fw-semibold text-decoration-non text-warning"
+          >
+            Create a new account
+          </a>
+        </p>
+      </div>
+
+      <form onSubmit={handleSubmit} action="">
+        <div className="d-flex flex-column gap-3">
+          <input
+            ref={emailDom}
+            type="email"
+            className="form-control p-3"
+            placeholder="Email address"
+          />
+
+          <input
+            ref={passwordDom}
+            type="password"
+            className="form-control p-3"
+            placeholder="password"
+          />
+        </div>
+
+        <div className="mt-3">
+          <p className="d-flex justify-content-end">
+            <a
+              href=""
+              className="fw-semibold text-decoration-none text-warning"
+            >
+              Forgot Password?
+            </a>
+          </p>
+        </div>
+
+        <div className="d-grid">
+          <a href="">
+            <button
+              type="submit"
+              className="btn btn-primary action__btn fs-5 fw-semibold"
+            >
+              Log In
+            </button>
+          </a>
+        </div>
+      </form>
+    </div>
+  );
+};
+
+export default LogIn;

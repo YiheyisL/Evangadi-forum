@@ -1,102 +1,90 @@
-import { useContext, useEffect } from "react";
-import "./Header.css";
+import React, { useContext } from "react";
+import logo from "../../image/evangadi-logo-black.png";
 import { Link, useNavigate } from "react-router-dom";
 import { AppState } from "../../App";
-import Nav from "react-bootstrap/Nav";
-import Container from "react-bootstrap/Container";
 
-import Navbar from "react-bootstrap/Navbar";
-import Offcanvas from "react-bootstrap/Offcanvas";
-
-function Header() {
+const Header = () => {
+  const { user, setuser, token } = useContext(AppState);
+  // console.log(user)
+  // console.log(token)
   const navigate = useNavigate();
-  const { user, setUser } = useContext(AppState);
 
-  const logout = () => {
-    // Clear the user object
-    setUser(null);
-
-    // Clear token from localStorage
-    localStorage.setItem("token", "");
-    navigate("/login");
+  const handleLogout = () => {
+    // Clear the user and token (assuming the token is stored in local storage)
+    localStorage.removeItem("token");
+    setuser(null);
+    navigate("/login"); // Redirect to the login page or any other desired page after logout
   };
-  useEffect(() => {
-    // Check if a token is present in localStorage
-    const storedToken = localStorage.getItem("token");
-
-    if (storedToken) {
-      // If a token is present, set the user as logged in
-      setUser({});
-    } else {
-      // If no token is present, set the user as logged out
-      setUser(null);
-    }
-  }, [setUser]);
 
   return (
-    <>
-      {["md"].map((expand) => (
-        <Navbar
-          key={expand}
-          expand={expand}
-          className="bg-body-tertiary p-2 fixed-top shadow-sm mb-5"
-        >
-          <Container fluid>
-            <Navbar.Brand>
-              <Link className="navbar-brand" to={"/"}>
-                <img
-                  className="evangadiImage"
-                  src="https://www.evangadi.com/themes/humans//assets/images/misc/evangadi-logo-home.png"
-                  alt="evangadi logo"
-                />
-              </Link>
-            </Navbar.Brand>
-            <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${expand}`} />
-            <Navbar.Offcanvas
-              id={`offcanvasNavbar-expand-${expand}`}
-              aria-labelledby={`offcanvasNavbarLabel-expand-${expand}`}
-              placement="end"
-            >
-              <Offcanvas.Header closeButton>
-                <Offcanvas.Title
-                  id={`offcanvasNavbarLabel-expand-${expand}`}
-                ></Offcanvas.Title>
-              </Offcanvas.Header>
-              <Offcanvas.Body>
-                <Nav className="justify-content-end flex-grow-1 pe-3">
-                  <Nav.Link>
-                    <div
-                      onClick={() =>
-                        user ? navigate("/") : navigate("/login")
-                      }
+    <section className="sticky-top custom-sticky">
+      <nav className="navbar p-3 navbar-expand-lg">
+        <div className="container">
+          <a className="navbar-brand" href="#">
+            <img src={logo} alt="EvangadiLogo" />
+          </a>
+
+          <button
+            className="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span className="navbar-toggler-icon"></span>
+          </button>
+
+          <div
+            className="collapse navbar-collapse justify-content-end fw-semibold"
+            id="navbarNav"
+          >
+            <ul className="navbar-nav">
+              <li className="nav-item align-items-center d-flex">
+                <a
+                  className="nav-link active"
+                  aria-current="page"
+                  href="http://localhost:3000/"
+                >
+                  Home
+                </a>
+              </li>
+              <li className="nav-item align-items-center d-flex">
+                <a className="nav-link" href="#">
+                  How It Works
+                </a>
+              </li>
+              {/* <li className="nav-item align-items-center d-flex">
+                <a className="nav-link" href="http://localhost:3000/login"><button className='btn btn-primary fw-bold px-5 action__btn'>
+                  SIGN IN
+                </button></a>
+              </li> */}
+
+              <li className="nav-item align-items-center d-flex">
+                {user ? (
+                  <Link className="nav-link" to="http://localhost:3000/login">
+                    <button
+                      className="btn btn-primary fw-bold px-5 action__btn"
+                      onClick={handleLogout}
                     >
-                      Home
-                    </div>
-                  </Nav.Link>
-                  <Nav.Link href="#">
-                    <Link className="links">How it works</Link>
-                  </Nav.Link>
-                  <Nav.Link>
-                    <div className="connect-block btn-blue">
-                      {user ? (
-                        <span onClick={logout} className="tomblue">
-                          LOG OUT
-                        </span>
-                      ) : (
-                        <Link to="/login">
-                          <span className="tomblue">SIGN IN</span>
-                        </Link>
-                      )}
-                    </div>
-                  </Nav.Link>
-                </Nav>
-              </Offcanvas.Body>
-            </Navbar.Offcanvas>
-          </Container>
-        </Navbar>
-      ))}
-    </>
+                      Logout
+                    </button>
+                  </Link>
+                ) : (
+                  <Link className="nav-link" to="http://localhost:3000/login">
+                    <button className="btn btn-primary fw-bold px-5 action__btn">
+                      Sign In
+                    </button>
+                  </Link>
+                )}
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </section>
   );
-}
+};
 
 export default Header;
